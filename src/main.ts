@@ -37,8 +37,13 @@ export const translate = (word) => {
   };
 
   const req = https.request(options, (res) => {
-    res.on("data", (d) => {
-      process.stdout.write(d);
+    let chunks = [];
+    res.on("data", (chunk) => {
+      chunks.push(chunk);
+    });
+    res.on("end", () => {
+      const string = Buffer.concat(chunks).toString();
+      console.log(string);
     });
   });
 
