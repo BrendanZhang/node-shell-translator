@@ -1,0 +1,16 @@
+{
+  "name": "node-shell-translator",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev src/main.ts",
+    "cli": "ts-node-dev src/cli.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^6.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.21"
+  }
+}
