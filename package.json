@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "ts-node-dev src/main.ts",
     "cli": "ts-node-dev src/cli.ts",
-    "build": "tsc && parcel build dist/cli.js -d dist/cli"
+    "build": "tsc && parcel build dist/cli.js -d dist/cli --no-cache"
   },
   "shebang": [
     {
