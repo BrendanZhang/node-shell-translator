@@ -2,6 +2,7 @@ const https = require("https");
 const querystring = require("querystring");
 const crypto = require("crypto");
 const { appKey, appSecret } = require("../secret/secret.json");
+const errorCodeMessage = require("./errorCode.json");
 
 export const translate = (word) => {
   // crypto 无所不能
@@ -21,7 +22,7 @@ export const translate = (word) => {
 
   const query: string = querystring.stringify({
     q: word,
-    appKey: appKey,
+    appKey: appKey + 1,
     salt: salt,
     from: "en",
     to: "zh-CNS",
@@ -43,7 +44,39 @@ export const translate = (word) => {
     });
     res.on("end", () => {
       const string = Buffer.concat(chunks).toString();
-      console.log(string);
+
+      type youdaoResult = {
+        returnPhrase: string[]; // 需要
+        errorCode: string;
+        query: string;
+        translation: string[]; // 需要
+        basic: {
+          // 需要
+          exam_type: string[];
+          phonetic?: string;
+          "uk-phonetic"?: string;
+          "uk-speech"?: string;
+          "us-speech"?: string;
+          wfs: { wf: { name: string; value: string[] } }[];
+          explains: string[];
+        };
+        web?: { key: string; value: string[] }[];
+        l: string; // 需要
+        dict: {
+          url: string;
+        };
+        webdict: {
+          url: string;
+        };
+        tSpeakUrl: string;
+        speakUrl: string;
+      };
+      const obj: youdaoResult = JSON.parse(string);
+      if (parseInt(obj.errorCode) === 0) {
+        console.dir(obj);
+      } else {
+        console.log(errorCodeMessage[obj.errorCode]);
+      }
     });
   });
 
