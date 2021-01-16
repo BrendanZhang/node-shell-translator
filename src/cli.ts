@@ -1,3 +1,4 @@
+#!/usr/bin/env/ node
 import * as commander from "commander";
 import { translate } from "./main";
 
@@ -8,7 +9,7 @@ program
   .name("fy")
   .usage("<English>")
   .arguments("<English>")
-  .action((english) => {
+  .action((english: string) => {
     translate(english);
   });
 
