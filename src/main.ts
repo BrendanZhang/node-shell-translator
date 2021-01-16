@@ -1,10 +1,12 @@
+import { IncomingMessage } from "http";
+
 const https = require("https");
 const querystring = require("querystring");
 const crypto = require("crypto");
-const { appKey, appSecret } = require("../secret/secret.json");
-const errorCodeMessage = require("./errorCode.json");
+import { appKey, appSecret } from "./private/private";
+import { errorCodeMessage } from "./errorCode";
 
-export const translate = (word) => {
+export const translate = (word: string) => {
   // crypto 无所不能
   const salt = crypto.randomBytes(3).toString("base64");
   const currentTime = Math.round(new Date().getTime() / 1000);
@@ -20,7 +22,7 @@ export const translate = (word) => {
     )
     .digest("hex");
 
-  
+  const target = /[a-zA-Z]/.test(word[0]) ? { from: "en", to: "zh-CNS" } : { from: "zh-CNS", to: "en" };
 
   const query: string = querystring.stringify({
     q: word,
@@ -39,9 +41,9 @@ export const translate = (word) => {
     method: "GET",
   };
 
-  const req = https.request(options, (res) => {
-    let chunks = [];
-    res.on("data", (chunk) => {
+  const req = https.request(options, (res: IncomingMessage) => {
+    let chunks: Buffer[] = [];
+    res.on("data", (chunk: Buffer) => {
       chunks.push(chunk);
     });
     res.on("end", () => {
@@ -75,7 +77,7 @@ export const translate = (word) => {
       };
       const obj: youdaoResult = JSON.parse(string);
       if (parseInt(obj.errorCode) === 0) {
-        console.dir(obj);
+        console.dir(obj.translation[0]);
         process.exit(0);
       } else if (obj.errorCode in errorCodeMessage) {
         console.error(errorCodeMessage[obj.errorCode]);
@@ -87,7 +89,7 @@ export const translate = (word) => {
     });
   });
 
-  req.on("error", (e) => {
+  req.on("error", (e: Error) => {
     console.error(e);
   });
   req.end();

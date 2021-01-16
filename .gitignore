@@ -1,2 +1,4 @@
-secret
+/src/private
+dist
 node_modules
+.cache
