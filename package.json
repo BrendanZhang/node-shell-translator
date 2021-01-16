@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "ts-node-dev src/main.ts",
     "cli": "ts-node-dev src/cli.ts",
-    "test": "node ./dist/cli.js test"
+    "test": "./dist/cli.js test"
   },
   "license": "MIT",
   "dependencies": {
