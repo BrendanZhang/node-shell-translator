@@ -20,12 +20,14 @@ export const translate = (word) => {
     )
     .digest("hex");
 
+  
+
   const query: string = querystring.stringify({
     q: word,
-    appKey: appKey + 1,
+    appKey: appKey,
     salt: salt,
-    from: "en",
-    to: "zh-CNS",
+    from: "auto",
+    to: "auto",
     sign: sign,
     signType: "v3",
     curtime: currentTime,
@@ -74,8 +76,13 @@ export const translate = (word) => {
       const obj: youdaoResult = JSON.parse(string);
       if (parseInt(obj.errorCode) === 0) {
         console.dir(obj);
+        process.exit(0);
+      } else if (obj.errorCode in errorCodeMessage) {
+        console.error(errorCodeMessage[obj.errorCode]);
+        process.exit(2);
       } else {
-        console.log(errorCodeMessage[obj.errorCode]);
+        console.error("未知错误");
+        process.exit(1);
       }
     });
   });
