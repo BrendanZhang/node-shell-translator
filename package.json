@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "ts-node-dev src/main.ts",
     "cli": "ts-node-dev src/cli.ts",
+    "build": "parcel build src/cli.ts --target node && chmod u+x dist/cli.js",
     "test": "./dist/cli.js test"
   },
   "shebang": [
