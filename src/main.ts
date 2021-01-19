@@ -3,8 +3,12 @@ import { IncomingMessage } from "http";
 const https = require("https");
 const querystring = require("querystring");
 const crypto = require("crypto");
+const chalk = require("chalk");
+const error = chalk.bold.red;
 import { appKey, appSecret } from "./private/private";
 import { errorCodeMessage } from "./errorCode";
+import { youdaoResult } from "./common";
+import { display } from "./colorLog";
 
 export const translate = (word: string) => {
   // crypto 无所不能
@@ -49,41 +53,15 @@ export const translate = (word: string) => {
     res.on("end", () => {
       const string = Buffer.concat(chunks).toString();
 
-      type youdaoResult = {
-        returnPhrase: string[]; // 需要
-        errorCode: string;
-        query: string;
-        translation: string[]; // 需要
-        basic: {
-          // 需要
-          exam_type: string[];
-          phonetic?: string;
-          "uk-phonetic"?: string;
-          "uk-speech"?: string;
-          "us-speech"?: string;
-          wfs: { wf: { name: string; value: string[] } }[];
-          explains: string[];
-        };
-        web?: { key: string; value: string[] }[];
-        l: string; // 需要
-        dict: {
-          url: string;
-        };
-        webdict: {
-          url: string;
-        };
-        tSpeakUrl: string;
-        speakUrl: string;
-      };
       const obj: youdaoResult = JSON.parse(string);
       if (parseInt(obj.errorCode) === 0) {
-        console.dir(obj.translation[0]);
+        display(obj);
         process.exit(0);
       } else if (obj.errorCode in errorCodeMessage) {
-        console.error(errorCodeMessage[obj.errorCode]);
+        console.error(error(errorCodeMessage[obj.errorCode]));
         process.exit(2);
       } else {
-        console.error("未知错误");
+        console.error(error("未知错误"));
         process.exit(1);
       }
     });
