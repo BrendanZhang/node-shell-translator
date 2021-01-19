@@ -5,7 +5,6 @@ const orange = chalk.keyword("orange");
 const errorColor = chalk.bold.red;
 
 const en2zh = (obj: youdaoResult) => {
-  console.log(obj);
   console.log("");
   console.log(orange(obj.returnPhrase));
   console.log(yellowBright(`英 [${obj.basic["uk-phonetic"]}]`), yellowBright(`美 [${obj.basic.phonetic}]`));
@@ -40,7 +39,6 @@ const en2zh = (obj: youdaoResult) => {
 };
 
 const zh2en = (obj: youdaoResult) => {
-  console.log(obj);
   console.log("");
   console.log(`${orange(obj.returnPhrase)} `);
   obj.basic.phonetic && console.log(yellow(`[${obj.basic.phonetic}]`));
@@ -64,8 +62,8 @@ const zh2en = (obj: youdaoResult) => {
 
 const notWord = () => {
   console.log("");
-  console.error(errorColor("抱歉，没有查到这个词😢"));
-  console.error(errorColor("也许拼错了？😱"));
+  console.error(errorColor("😢抱歉，没有查到这个词"));
+  console.error(errorColor("😱也许拼错了？"));
   console.log("");
 };
 
