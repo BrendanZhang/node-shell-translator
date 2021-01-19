@@ -29,8 +29,8 @@ const en2zh = (obj: youdaoResult) => {
   obj.web &&
     (console.log(cyanBright("网络释义")),
     console.log(blue(obj.web[0].key) + " " + blueBright(obj.web[0].value.join(" ; "))),
-    console.log(cyanBright("短语")),
     console.log(""),
+    console.log(cyanBright("短语")),
     obj.web.map((webExplain, index) => {
       index !== 0 && console.log(blue(webExplain.key) + " " + blueBright(webExplain.value.join(" ; ")));
     }));
