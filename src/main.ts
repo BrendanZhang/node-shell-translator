@@ -9,6 +9,7 @@ import { appKey, appSecret } from "./private/private";
 import { errorCodeMessage } from "./errorCode";
 import { youdaoResult } from "./common";
 import { display } from "./colorLog";
+import { langType } from "./availableLang";
 
 export const translate = (type: string, word: string) => {
   // crypto 无所不能
@@ -26,16 +27,23 @@ export const translate = (type: string, word: string) => {
     )
     .digest("hex");
 
-  const target = /[a-zA-Z]/.test(word[0]) ? { from: "en", to: "zh-CNS" } : { from: "zh-CNS", to: "en" };
+  let typeResult = langType(type);
+  if (!typeResult) {
+    console.error(errorColor("😢Unexpected type(-t), Temporarily using default type."));
+    console.error(errorColor("😢无法识别的查询类型(-t)，临时使用默认类型(auto)。"));
+    typeResult = { from: "auto", to: "auto" };
+  }
+  console.log(typeResult);
 
   const query: string = querystring.stringify({
     q: word,
     appKey: appKey,
     salt: salt,
-    from: "auto",
-    to: "auto",
+    from: typeResult.from,
+    to: typeResult.to,
     sign: sign,
     signType: "v3",
+    strict: true,
     curtime: currentTime,
   });
 

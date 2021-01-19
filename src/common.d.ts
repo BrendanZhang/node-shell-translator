@@ -34,3 +34,12 @@ export interface ILangList {
 export interface IErrorCodeMessage {
   [key: string]: string;
 }
+
+export interface IAvailableLang {
+  [key: string]: string;
+}
+
+export interface ITypeResult {
+  from: string;
+  to: string;
+}
