@@ -4,7 +4,7 @@ const chalk = require("chalk");
 const orange = chalk.keyword("orange");
 const errorColor = chalk.bold.red;
 
-const en2zh = (obj: youdaoResult) => {
+const en2cn = (obj: youdaoResult) => {
   console.log("");
   console.log(orange(obj.returnPhrase));
   console.log(yellowBright(`英 [${obj.basic["uk-phonetic"]}]`), yellowBright(`美 [${obj.basic.phonetic}]`));
@@ -38,7 +38,7 @@ const en2zh = (obj: youdaoResult) => {
   obj.basic.exam_type && console.log(grey(obj.basic.exam_type.join(" ")));
 };
 
-const zh2en = (obj: youdaoResult) => {
+const cn2en = (obj: youdaoResult) => {
   console.log("");
   console.log(`${orange(obj.returnPhrase)} `);
   obj.basic.phonetic && console.log(yellow(`[${obj.basic.phonetic}]`));
@@ -60,7 +60,7 @@ const zh2en = (obj: youdaoResult) => {
   console.log("");
 };
 
-const jp2zh = (obj: youdaoResult) => {
+const jp2cn = (obj: youdaoResult) => {
   console.log(obj);
 };
 
@@ -72,12 +72,12 @@ const notWord = () => {
 };
 
 const langList: ILangList = {
-  ["en2zh-CHS"]: en2zh,
-  ["zh-CHS2en"]: zh2en,
-  ["ja2zh-CHS"]: jp2zh,
+  ["en2zh-CHS"]: en2cn,
+  ["zh-CHS2en"]: cn2en,
+  ["ja2zh-CHS"]: jp2cn,
   notWord: notWord,
 };
 
 export const display = (obj: youdaoResult) => {
-  obj.isWord ? (langList[obj.l] ? langList[obj.l](obj) : en2zh(obj)) : langList.notWord();
+  obj.isWord ? (langList[obj.l] ? langList[obj.l](obj) : en2cn(obj)) : langList.notWord();
 };

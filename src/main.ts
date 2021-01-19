@@ -10,7 +10,7 @@ import { errorCodeMessage } from "./errorCode";
 import { youdaoResult } from "./common";
 import { display } from "./colorLog";
 
-export const translate = (word: string) => {
+export const translate = (type: string, word: string) => {
   // crypto 无所不能
   const salt = crypto.randomBytes(3).toString("base64");
   const currentTime = Math.round(new Date().getTime() / 1000);
