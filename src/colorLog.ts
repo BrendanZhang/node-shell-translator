@@ -5,10 +5,11 @@ const orange = chalk.keyword("orange");
 const errorColor = chalk.bold.red;
 
 const en2cn = (obj: youdaoResult) => {
+  console.log(obj);
   console.log("");
   console.log(orange(obj.returnPhrase));
   console.log(yellowBright(`英 [${obj.basic["uk-phonetic"]}]`), yellowBright(`美 [${obj.basic.phonetic}]`));
-  !obj.basic && console.log(blueBright(obj.translation));
+  !obj.basic && obj.translation.map((transItem) => console.log(blueBright(transItem)));
   console.log("");
   obj.basic &&
     obj.basic.explains.map((explain) => {
@@ -60,24 +61,23 @@ const cn2en = (obj: youdaoResult) => {
   console.log("");
 };
 
-const jp2cn = (obj: youdaoResult) => {
-  console.log(obj);
-};
-
-const notWord = () => {
+const notWord = (obj: youdaoResult) => {
   console.log("");
-  console.error(errorColor("😢抱歉，没有查到这个词"));
-  console.error(errorColor("😱也许拼错了？"));
+  console.log(orange(obj.query));
+  obj.translation.map((transItem) => console.log(blueBright(transItem)));
+  console.log("");
+  console.log(yellow("除中英外其他语种查询能力较弱"));
+  console.error(errorColor("😢这也许不是你想要的结果"));
+  console.error(errorColor("😱That might not be the correct answer."));
   console.log("");
 };
 
 const langList: ILangList = {
   ["en2zh-CHS"]: en2cn,
   ["zh-CHS2en"]: cn2en,
-  ["ja2zh-CHS"]: jp2cn,
   notWord: notWord,
 };
 
 export const display = (obj: youdaoResult) => {
-  obj.isWord ? (langList[obj.l] ? langList[obj.l](obj) : en2cn(obj)) : langList.notWord();
+  obj.isWord ? (langList[obj.l] ? langList[obj.l](obj) : en2cn(obj)) : langList.notWord(obj);
 };

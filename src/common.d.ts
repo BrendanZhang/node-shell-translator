@@ -28,7 +28,7 @@ export type youdaoResult = {
 
 export interface ILangList {
   [key: string]: (obj: youdaoResult) => void;
-  notWord: () => void;
+  notWord: (obj: youdaoResult) => void;
 }
 
 export interface IErrorCodeMessage {

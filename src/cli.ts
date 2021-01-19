@@ -11,25 +11,25 @@ program
   .version(version)
   .name("fy")
   .arguments("[words]")
-  .option("-t, --type <type>", "Confirming original language and target language", "auto")
+  .option("-t, --type <type>", "Confirming original language and target language, default are zh2en/en2zh", "auto")
   .addHelpText(
     "after",
     `
 TypeList (Available language):
-  cn2en: "Chinese to English",
-  cn2jp: "Chinese to Japanese",
-  cn2ko: "Chinese to Korean",
-  cn2fr: "Chinese to French",
-  cn2es: "Chinese to Spanish",
-  cn2it: "Chinese to Italian",
-  cn2ru: "Chinese to Russian",
-  en2cn: "English to Chinese",
-  jp2cn: "Japanese to Chinese",
-  ko2cn: "Korean to Chinese",
-  fr2cn: "French to Chinese",
-  es2cn: "Spanish to Chinese",
-  it2cn: "Italian to Chinese",
-  ru2cn: "Russian to Chinese",
+  zh2en: "Chinese to English",
+  zh2ja: "Chinese to Japanese",
+  zh2ko: "Chinese to Korean",
+  zh2fr: "Chinese to French",
+  zh2es: "Chinese to Spanish",
+  zh2it: "Chinese to Italian",
+  zh2ru: "Chinese to Russian",
+  en2zh: "English to Chinese",
+  ja2zh: "Japanese to Chinese",
+  ko2zh: "Korean to Chinese",
+  fr2zh: "French to Chinese",
+  es2zh: "Spanish to Chinese",
+  it2zh: "Italian to Chinese",
+  ru2zh: "Russian to Chinese",
   `,
   )
   .usage("-t <type> [words]")

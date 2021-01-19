@@ -33,7 +33,6 @@ export const translate = (type: string, word: string) => {
     console.error(errorColor("😢无法识别的查询类型(-t)，临时使用默认类型(auto)。"));
     typeResult = { from: "auto", to: "auto" };
   }
-  console.log(typeResult);
 
   const query: string = querystring.stringify({
     q: word,
