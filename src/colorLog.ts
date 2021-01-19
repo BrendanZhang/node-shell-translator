@@ -35,7 +35,7 @@ const en2zh = (obj: youdaoResult) => {
       index !== 0 && console.log(blue(webExplain.key) + " " + blueBright(webExplain.value.join(" ; ")));
     }));
   console.log("");
-  console.log(grey(obj.basic.exam_type.join(" ")));
+  obj.basic.exam_type && console.log(grey(obj.basic.exam_type.join(" ")));
 };
 
 const zh2en = (obj: youdaoResult) => {
@@ -60,6 +60,10 @@ const zh2en = (obj: youdaoResult) => {
   console.log("");
 };
 
+const jp2zh = (obj: youdaoResult) => {
+  console.log(obj);
+};
+
 const notWord = () => {
   console.log("");
   console.error(errorColor("😢抱歉，没有查到这个词"));
@@ -70,6 +74,7 @@ const notWord = () => {
 const langList: ILangList = {
   ["en2zh-CHS"]: en2zh,
   ["zh-CHS2en"]: zh2en,
+  ["ja2zh-CHS"]: jp2zh,
   notWord: notWord,
 };
 
