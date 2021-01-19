@@ -23,10 +23,12 @@ export type youdaoResult = {
   };
   tSpeakUrl: string;
   speakUrl: string;
+  isWord: boolean;
 };
 
 export interface ILangList {
   [key: string]: (obj: youdaoResult) => void;
+  notWord: () => void;
 }
 
 export interface IErrorCodeMessage {

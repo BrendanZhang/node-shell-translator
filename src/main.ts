@@ -4,7 +4,7 @@ const https = require("https");
 const querystring = require("querystring");
 const crypto = require("crypto");
 const chalk = require("chalk");
-const error = chalk.bold.red;
+const errorColor = chalk.bold.red;
 import { appKey, appSecret } from "./private/private";
 import { errorCodeMessage } from "./errorCode";
 import { youdaoResult } from "./common";
@@ -58,10 +58,10 @@ export const translate = (word: string) => {
         display(obj);
         process.exit(0);
       } else if (obj.errorCode in errorCodeMessage) {
-        console.error(error(errorCodeMessage[obj.errorCode]));
+        console.error(errorColor(errorCodeMessage[obj.errorCode]));
         process.exit(2);
       } else {
-        console.error(error("未知错误"));
+        console.error(errorColor("未知错误"));
         process.exit(1);
       }
     });
