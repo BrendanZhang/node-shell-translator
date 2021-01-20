@@ -29,8 +29,8 @@ export const translate = (type: string, word: string) => {
 
   let typeResult = langType(type);
   if (!typeResult) {
-    console.error(errorColor("😢Unexpected type(-t), Temporarily using default type."));
-    console.error(errorColor("😢无法识别的查询类型(-t)，临时使用默认类型(auto)。"));
+    console.error(errorColor("😢Unexpected type(-t --type <type>), Temporarily using default type."));
+    console.error(errorColor("😢无法识别的查询类型(-t --type <type>)，临时使用默认类型(auto)。"));
     typeResult = { from: "auto", to: "auto" };
   }
 
