@@ -1,5 +1,6 @@
-import { blue, blueBright, cyanBright, greenBright, grey, yellow, yellowBright, cyan } from "chalk";
+import { blue, blueBright, cyanBright, greenBright, green, grey, yellow, yellowBright, cyan } from "chalk";
 import { ILangList, youdaoResult } from "./common";
+import { formattedLink } from "./link";
 const chalk = require("chalk");
 const orange = chalk.keyword("orange");
 const errorColor = chalk.bold.red;
@@ -58,6 +59,7 @@ const en2cn = (obj: youdaoResult) => {
   console.log("");
   webExplain(obj);
   console.log("");
+  formattedLink(obj);
   obj.basic.exam_type && console.log(grey(obj.basic.exam_type.join(" ")));
 };
 
@@ -74,6 +76,8 @@ const cn2en = (obj: youdaoResult) => {
   console.log("");
   webExplain(obj);
   console.log("");
+  formattedLink(obj);
+  console.log("");
 };
 
 const notWord = (obj: youdaoResult) => {
@@ -83,6 +87,7 @@ const notWord = (obj: youdaoResult) => {
   translateDirectly(obj);
   console.log("");
   webExplain(obj);
+  formattedLink(obj);
   console.log("");
   console.error(errorColor("😢这也许不是你想要的结果"));
   console.error(errorColor("😱That might not be the correct answer."));

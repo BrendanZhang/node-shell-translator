@@ -1,4 +1,4 @@
-import { IncomingMessage } from "http";
+import { ServerResponse } from "http";
 
 const https = require("https");
 const querystring = require("querystring");
@@ -48,11 +48,15 @@ export const translate = (type: string, word: string) => {
 
   const options = {
     hostname: "openapi.youdao.com",
-    path: "/api?" + query,
-    method: "GET",
+    path: "/api",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Length": Buffer.byteLength(query),
+    },
   };
 
-  const req = https.request(options, (res: IncomingMessage) => {
+  const req = https.request(options, (res: ServerResponse) => {
     let chunks: Buffer[] = [];
     res.on("data", (chunk: Buffer) => {
       chunks.push(chunk);
@@ -77,5 +81,6 @@ export const translate = (type: string, word: string) => {
   req.on("error", (e: Error) => {
     console.error(e);
   });
+  req.write(query);
   req.end();
 };
