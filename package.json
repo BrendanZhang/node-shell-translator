@@ -1,6 +1,6 @@
 {
   "name": "node-shell-translator",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "dist/cli.js",
   "bin": {
     "fy": "dist/cli.js"

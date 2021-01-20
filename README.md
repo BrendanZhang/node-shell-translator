@@ -2,7 +2,7 @@
 
 [![NPM Version](http://img.shields.io/npm/v/node-shell-translator.svg?style=flat)](https://www.npmjs.org/package/node-shell-translator)
 
-- Node Shell Translator is a translate tool for cli.
+- Node Shell Translator is a cli translation tool.
 - Based on Nodejs and youdao api server.
 - Using chalk to coloring command log.
 
