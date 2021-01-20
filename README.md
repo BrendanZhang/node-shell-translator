@@ -7,13 +7,14 @@
 - Using chalk to coloring command log.
 
 ```shell
-❯ fy -t zh2en hello
+❯ fy hello
 
 hello
-[həˈləʊ]
+英 [həˈləʊ] 美 [həˈləʊ]
 
 int. 喂；哈罗，你好，您好（表示问候， 惊奇或唤起注意时的用语）
 n. （Hello）（法）埃洛（人名）
+[ 复数 hellos 第三人称单数 helloes 现在分词 helloing 过去式 helloed 过去分词 helloed ]
 
 网络释义
 Hello 你好 ; 您好 ; 哈啰 ; 喂
@@ -23,6 +24,7 @@ Hello Kitty 凯蒂猫 ; 吉蒂猫
 Hello Neighbor 你好邻居
 
 web dict (​https://www.youdao.com/w/en/hello​)
+初中 高中 CET4 CET6 考研
 ```
 
 ## Installation
