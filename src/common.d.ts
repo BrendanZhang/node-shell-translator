@@ -8,6 +8,7 @@ export type youdaoResult = {
     exam_type: string[];
     phonetic?: string;
     "uk-phonetic"?: string;
+    "us-phonetic"?: string;
     "uk-speech"?: string;
     "us-speech"?: string;
     wfs: { wf: { name: string; value: string[] } }[];

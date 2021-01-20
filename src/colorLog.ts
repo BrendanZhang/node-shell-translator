@@ -1,40 +1,62 @@
-import { blue, blueBright, cyanBright, greenBright, grey, whiteBright, yellow, yellowBright, cyan } from "chalk";
+import { blue, blueBright, cyanBright, greenBright, grey, yellow, yellowBright, cyan } from "chalk";
 import { ILangList, youdaoResult } from "./common";
 const chalk = require("chalk");
 const orange = chalk.keyword("orange");
 const errorColor = chalk.bold.red;
 
-const en2cn = (obj: youdaoResult) => {
-  console.log(obj);
-  console.log("");
-  console.log(orange(obj.returnPhrase));
-  console.log(yellowBright(`英 [${obj.basic["uk-phonetic"]}]`), yellowBright(`美 [${obj.basic.phonetic}]`));
-  !obj.basic && obj.translation.map((transItem) => console.log(blueBright(transItem)));
-  console.log("");
-  obj.basic &&
-    obj.basic.explains.map((explain) => {
-      const formattedExplain = explain.split(". ");
-      console.log(`${chalk.cyan(formattedExplain[0] + ".")} ${chalk.blue(formattedExplain[1])}`);
-    }),
-    obj.basic.wfs &&
-      console.log(
-        greenBright(
-          `[ ${obj.basic.wfs
-            .map((wf) => {
-              return `${wf.wf.name} ${wf.wf.value}`;
-            })
-            .join(" ")} ]`,
-        ),
-      );
-  console.log("");
+const webExplain = (obj: youdaoResult) => {
+  // 网络释义
   obj.web &&
     (console.log(cyanBright("网络释义")),
     console.log(blue(obj.web[0].key) + " " + blueBright(obj.web[0].value.join(" ; "))),
     console.log(""),
     console.log(cyanBright("短语")),
-    obj.web.map((webExplain, index) => {
-      index !== 0 && console.log(blue(webExplain.key) + " " + blueBright(webExplain.value.join(" ; ")));
+    obj.web.map((explain, index) => {
+      index !== 0 && console.log(blue(explain.key) + " " + blueBright(explain.value.join(" ; ")));
     }));
+};
+
+const translateDirectly = (obj: youdaoResult) => {
+  // 直译
+  (!obj.basic || !obj.basic.explains) && obj.translation.map((transItem) => console.log(blueBright(transItem)));
+};
+
+const enWfs = (obj: youdaoResult) => {
+  // 复数 过去分词 过去式 现在分词
+  obj.basic.wfs &&
+    console.log(
+      greenBright(
+        `[ ${obj.basic.wfs
+          .map((wf) => {
+            return `${wf.wf.name} ${wf.wf.value}`;
+          })
+          .join(" ")} ]`,
+      ),
+    );
+};
+
+const enBasicDict = (obj: youdaoResult) => {
+  // 英文基本词典
+  obj.basic &&
+    obj.basic.explains.map((explain) => {
+      const formattedExplain = explain.split(". ");
+      formattedExplain.length > 1
+        ? console.log(`${cyan(formattedExplain[0] + ".")} ${blue(formattedExplain[1])}`)
+        : console.log(cyan(formattedExplain[0]));
+    }),
+    enWfs(obj);
+};
+
+const en2cn = (obj: youdaoResult) => {
+  console.log("");
+  console.log(orange(obj.returnPhrase));
+  obj.basic.phonetic &&
+    console.log(yellowBright(`英 [${obj.basic.phonetic}]`), yellowBright(`美 [${obj.basic["us-phonetic"]}]`));
+  translateDirectly(obj);
+  console.log("");
+  enBasicDict(obj);
+  console.log("");
+  webExplain(obj);
   console.log("");
   obj.basic.exam_type && console.log(grey(obj.basic.exam_type.join(" ")));
 };
@@ -43,30 +65,25 @@ const cn2en = (obj: youdaoResult) => {
   console.log("");
   console.log(`${orange(obj.returnPhrase)} `);
   obj.basic.phonetic && console.log(yellow(`[${obj.basic.phonetic}]`));
-  !obj.basic && console.log(blueBright(obj.translation));
+  translateDirectly(obj);
   console.log("");
   obj.basic &&
     obj.basic.explains.map((explain) => {
       console.log(blue(explain));
     });
   console.log("");
-  obj.web &&
-    (console.log(cyanBright("网络释义")),
-    console.log(blue(obj.web[0].key) + " " + blueBright(obj.web[0].value.join(" ; "))),
-    console.log(""),
-    console.log(cyanBright("短语")),
-    obj.web.map((webExplain, index) => {
-      index !== 0 && console.log(blue(webExplain.key) + " " + blueBright(webExplain.value.join(" ; ")));
-    }));
+  webExplain(obj);
   console.log("");
 };
 
 const notWord = (obj: youdaoResult) => {
+  console.log(yellow("除中英外对其他语种及句子的查询能力较弱"));
   console.log("");
   console.log(orange(obj.query));
-  obj.translation.map((transItem) => console.log(blueBright(transItem)));
+  translateDirectly(obj);
   console.log("");
-  console.log(yellow("除中英外其他语种查询能力较弱"));
+  webExplain(obj);
+  console.log("");
   console.error(errorColor("😢这也许不是你想要的结果"));
   console.error(errorColor("😱That might not be the correct answer."));
   console.log("");
