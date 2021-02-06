@@ -20,17 +20,27 @@ export const translate = (type: string, word: string) => {
     .createHash("sha256")
     .update(
       appKey +
-        (word.length <= 20 ? word : `${word.slice(0, 9)}${word.length}${word.slice(-10)}`) +
+        (word.length <= 20
+          ? word
+          : `${word.slice(0, 9)}${word.length}${word.slice(-10)}`) +
         salt +
         currentTime.toString() +
-        appSecret,
+        appSecret
     )
     .digest("hex");
 
   let typeResult = langType(type);
   if (!typeResult) {
-    console.error(errorColor("😢Unexpected type(-t --type <type>), Temporarily using default type."));
-    console.error(errorColor("😢无法识别的查询类型(-t --type <type>)，临时使用默认类型(auto)。"));
+    console.error(
+      errorColor(
+        "😢Unexpected type(-t --type <type>), Using default type temporarily."
+      )
+    );
+    console.error(
+      errorColor(
+        "😢无法识别的查询类型(-t --type <type>)，临时使用默认类型(auto)。"
+      )
+    );
     typeResult = { from: "auto", to: "auto" };
   }
 

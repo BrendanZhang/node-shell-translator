@@ -11,7 +11,11 @@ program
   .version(version)
   .name("fy")
   .arguments("[words]")
-  .option("-t, --type <type>", "Confirming original language and target language, default are zh2en/en2zh", "auto")
+  .option(
+    "-t, --type <type>",
+    "Confirming original language and target language, default are zh2en/en2zh",
+    "auto"
+  )
   .addHelpText(
     "after",
     `
@@ -30,12 +34,14 @@ TypeList (Available language):
   es2zh: "Spanish to Chinese",
   it2zh: "Italian to Chinese",
   ru2zh: "Russian to Chinese",
-  `,
+  `
   )
   .usage("-t <type> [words]")
   .action((words: string, options: { type: string }, command) => {
     const sentence = command.args.join(" ");
-    command.args.length > 1 ? translate(options.type, sentence) : translate(options.type, words);
+    command.args.length > 1
+      ? translate(options.type, sentence)
+      : translate(options.type, words);
   });
 
 program.parse(process.argv);

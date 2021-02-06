@@ -1,4 +1,14 @@
-import { blue, blueBright, cyanBright, greenBright, green, grey, yellow, yellowBright, cyan } from "chalk";
+import {
+  blue,
+  blueBright,
+  cyanBright,
+  greenBright,
+  green,
+  grey,
+  yellow,
+  yellowBright,
+  cyan,
+} from "chalk";
 import { ILangList, youdaoResult } from "./common";
 import { formattedLink } from "./link";
 const chalk = require("chalk");
@@ -9,17 +19,23 @@ const webExplain = (obj: youdaoResult) => {
   // 网络释义
   obj.web &&
     (console.log(cyanBright("网络释义")),
-    console.log(blue(obj.web[0].key) + " " + blueBright(obj.web[0].value.join(" ; "))),
+    console.log(
+      blue(obj.web[0].key) + " " + blueBright(obj.web[0].value.join(" ; "))
+    ),
     console.log(""),
     console.log(cyanBright("短语")),
     obj.web.map((explain, index) => {
-      index !== 0 && console.log(blue(explain.key) + " " + blueBright(explain.value.join(" ; ")));
+      index !== 0 &&
+        console.log(
+          blue(explain.key) + " " + blueBright(explain.value.join(" ; "))
+        );
     }));
 };
 
 const translateDirectly = (obj: youdaoResult) => {
   // 直译
-  (!obj.basic || !obj.basic.explains) && obj.translation.map((transItem) => console.log(blueBright(transItem)));
+  (!obj.basic || !obj.basic.explains) &&
+    obj.translation.map((transItem) => console.log(blueBright(transItem)));
 };
 
 const enWfs = (obj: youdaoResult) => {
@@ -31,8 +47,8 @@ const enWfs = (obj: youdaoResult) => {
           .map((wf) => {
             return `${wf.wf.name} ${wf.wf.value}`;
           })
-          .join(" ")} ]`,
-      ),
+          .join(" ")} ]`
+      )
     );
 };
 
@@ -42,7 +58,9 @@ const enBasicDict = (obj: youdaoResult) => {
     obj.basic.explains.map((explain) => {
       const formattedExplain = explain.split(". ");
       formattedExplain.length > 1
-        ? console.log(`${cyan(formattedExplain[0] + ".")} ${blue(formattedExplain[1])}`)
+        ? console.log(
+            `${cyan(formattedExplain[0] + ".")} ${blue(formattedExplain[1])}`
+          )
         : console.log(cyan(formattedExplain[0]));
     }),
     enWfs(obj);
@@ -52,7 +70,10 @@ const en2cn = (obj: youdaoResult) => {
   console.log("");
   console.log(orange(obj.returnPhrase));
   obj.basic.phonetic &&
-    console.log(yellowBright(`英 [${obj.basic.phonetic}]`), yellowBright(`美 [${obj.basic["us-phonetic"]}]`));
+    console.log(
+      yellowBright(`英 [${obj.basic.phonetic}]`),
+      yellowBright(`美 [${obj.basic["us-phonetic"]}]`)
+    );
   translateDirectly(obj);
   console.log("");
   enBasicDict(obj);
@@ -101,5 +122,9 @@ const langList: ILangList = {
 };
 
 export const display = (obj: youdaoResult) => {
-  obj.isWord ? (langList[obj.l] ? langList[obj.l](obj) : en2cn(obj)) : langList.notWord(obj);
+  obj.isWord
+    ? langList[obj.l]
+      ? langList[obj.l](obj)
+      : en2cn(obj)
+    : langList.notWord(obj);
 };
