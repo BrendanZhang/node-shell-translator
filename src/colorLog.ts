@@ -19,16 +19,11 @@ const webExplain = (obj: youdaoResult) => {
   // 网络释义
   obj.web &&
     (console.log(cyanBright("网络释义")),
-    console.log(
-      blue(obj.web[0].key) + " " + blueBright(obj.web[0].value.join(" ; "))
-    ),
+    console.log(blue(obj.web[0].key) + " " + blueBright(obj.web[0].value.join(" ; "))),
     console.log(""),
     console.log(cyanBright("短语")),
     obj.web.map((explain, index) => {
-      index !== 0 &&
-        console.log(
-          blue(explain.key) + " " + blueBright(explain.value.join(" ; "))
-        );
+      index !== 0 && console.log(blue(explain.key) + " " + blueBright(explain.value.join(" ; ")));
     }));
 };
 
@@ -58,9 +53,7 @@ const enBasicDict = (obj: youdaoResult) => {
     obj.basic.explains.map((explain) => {
       const formattedExplain = explain.split(". ");
       formattedExplain.length > 1
-        ? console.log(
-            `${cyan(formattedExplain[0] + ".")} ${blue(formattedExplain[1])}`
-          )
+        ? console.log(`${cyan(formattedExplain[0] + ".")} ${blue(formattedExplain[1])}`)
         : console.log(cyan(formattedExplain[0]));
     }),
     enWfs(obj);
@@ -111,7 +104,7 @@ const notWord = (obj: youdaoResult) => {
   formattedLink(obj);
   console.log("");
   console.error(errorColor("😢这也许不是你想要的结果"));
-  console.error(errorColor("😱That might not be the correct answer."));
+  console.error(errorColor("😱This might not be the correct answer."));
   console.log("");
 };
 
@@ -122,9 +115,5 @@ const langList: ILangList = {
 };
 
 export const display = (obj: youdaoResult) => {
-  obj.isWord
-    ? langList[obj.l]
-      ? langList[obj.l](obj)
-      : en2cn(obj)
-    : langList.notWord(obj);
+  obj.isWord ? (langList[obj.l] ? langList[obj.l](obj) : en2cn(obj)) : langList.notWord(obj);
 };

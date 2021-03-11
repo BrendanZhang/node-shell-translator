@@ -39,9 +39,7 @@ TypeList (Available language):
   .usage("-t <type> [words]")
   .action((words: string, options: { type: string }, command) => {
     const sentence = command.args.join(" ");
-    command.args.length > 1
-      ? translate(options.type, sentence)
-      : translate(options.type, words);
+    command.args.length > 1 ? translate(options.type, sentence) : translate(options.type, words);
   });
 
 program.parse(process.argv);
